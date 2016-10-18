@@ -21,6 +21,8 @@ class Panel extends CI_Controller {
 	 */
 	public function __construct() {
 		parent::__construct();
+        //TODO: Parsear templates con las variables de la base de datos
+        $this->load->library('parser');
 		$this->load->helper('url');
 		$this->load->library('session');
 	}

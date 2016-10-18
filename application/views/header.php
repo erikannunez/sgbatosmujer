@@ -47,5 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </nav>
 <div class="container theme-showcase" role="main">
 <?php if(isset($user['username'])):?>
-    <span class="pull-right label label-default">Bienvenid@, <?php echo $user['username'];?>!</span>
+    <span class="pull-right label label-info">Bienvenid@, <?php echo $user['username'];?>!</span>
 <?php endif;?>
+    <?php //print_r(get_defined_vars());
+    ?>

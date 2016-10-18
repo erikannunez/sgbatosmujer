@@ -12,15 +12,14 @@
             <div class="form-group">
                 <label for="user">Nombre de usuario:</label>
                 <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"
-                                                          aria-hidden="true"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
                     <input class="form-control" type="text" name="user"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="pass">Contrase&ntilde;a:</label>
                 <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+                    <span class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></span>
                     <input class="form-control" type="password" name="pass"/>
                 </div>
             </div>
