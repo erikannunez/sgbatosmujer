@@ -1,0 +1,11 @@
+body {
+    padding-top: 70px;
+    padding-bottom: 30px;
+}
+.navbar {
+    margin-bottom: 20px;
+}
+.navbar-nav>li>span {
+    display: inline-block;
+    margin: 15px;
+}
