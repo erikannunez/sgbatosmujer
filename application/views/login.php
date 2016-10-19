@@ -7,6 +7,10 @@
             <div class="alert alert-danger" role="alert">
                 <?php echo $error;?>
             </div>
+            <?php elseif($warning):?>
+            <div class="alert alert-warning" role="alert">
+                <?php echo $warning;?>
+            </div>
         <?php endif;?>
         <form method="post" action="<?php echo base_url() . "panel/doLogin"; ?>" enctype="multipart/form-data">
             <div class="form-group">
@@ -25,6 +29,7 @@
             </div>
             <div class="form-actions">
                 <input class="btn btn-primary" type="submit" value="Iniciar sesión"/>
+                <a class="btn btn-link" href="<?php echo base_url() . "panel/recover";?>" title="Recuperar password">Olvid&oacute; su contrase&ntilde;a?</a>
             </div>
         </form>
 

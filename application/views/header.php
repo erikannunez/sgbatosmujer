@@ -29,12 +29,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Departamento de la Mujer - SGBATOS</a>
+            <a class="navbar-brand" href="<?php echo base_url();?>">Departamento de la Mujer - SGBATOS</a>
         </div>
+        <?php
+        $segment = $this->uri->rsegment(2);
+        ?>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="<?php echo base_url();?>">Inicio</a></li>
-                <li>
+                <li class="<?php if($segment == 'index') echo 'active';?>"><a href="<?php echo base_url();?>">Inicio</a></li>
+                <li class="<?php if($segment == 'login') echo 'active';?>">
                     <?php if(!isset($user['username'])):?>
                     <a class="pull-right" href="<?php echo base_url() . "panel/login";?>">Iniciar sesión</a>
                     <?php else:?>

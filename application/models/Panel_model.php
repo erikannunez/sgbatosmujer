@@ -11,8 +11,17 @@ class Panel_model extends CI_Model {
       $this->db->where('pass', $password);
 
       $query = $this->db->get();
-      $res = $query->row();
 
-      return $res;
+      return $query->row();
+   }
+
+   public function userRecover($email){
+      $this->db->select('id, username, roleID');
+      $this->db->from('system_users');
+      $this->db->where('mail', $email);
+
+      $query = $this->db->get();
+
+      return $query->row();
    }
 }

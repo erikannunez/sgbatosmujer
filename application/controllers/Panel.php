@@ -30,12 +30,13 @@ class Panel extends CI_Controller {
         $data = array();
         $data['user'] = $this->session->userdata();
 		$this->load->view('header', $data);
-		$this->load->view('panel', $data);
+		$this->load->view('index', $data);
 		$this->load->view('footer');
 	}
 	public function login(){
         $data = array(
-            'error' => $this->session->flashdata('error')
+            'error' => $this->session->flashdata('error'),
+			'warning' => $this->session->flashdata('warning')
         );
 		$this->load->view('header');
 		$this->load->view('login', $data);
@@ -55,7 +56,7 @@ class Panel extends CI_Controller {
 			if($user){
 				$user_session = array('id'=>$user->id, 'username'=>$user->username, 'role'=>$user->roleID);
 				$this->session->set_userdata($user_session);
-                redirect('panel/index');
+                redirect('panel/system');
 			}else{
 				$this->session->set_flashdata('error', "¡Los datos ingresados son incorrectos! Intente nuevamente.");
                 redirect('panel/login');
@@ -65,5 +66,39 @@ class Panel extends CI_Controller {
 			$this->login();
 		}
 
+	}
+	public function recover(){
+		//TODO: implementar reCAPTCHA
+		$data = array(
+			'error' => $this->session->flashdata('error'),
+			'success' => $this->session->flashdata('success'),
+		);
+		$this->load->view('header');
+		$this->load->view('recover', $data);
+		$this->load->view('footer');
+
+	}
+	public function doRecover(){
+		if($this->input->post()){
+			$this->load->model('panel_model');
+			$user = $this->panel_model->userRecover($this->input->post('email'));
+
+			if($user){
+				$this->session->set_flashdata('success', "Se han enviado las instrucciones de acceso a su email.");
+			}else{
+				$this->session->set_flashdata('error', "No existe un usuario para el mail ingresado.");
+			}
+			redirect('panel/recover');
+		}
+	}
+	public function system(){
+		if($this->session->userdata('username')){
+			$this->load->view('header');
+			$this->load->view('panel');
+			$this->load->view('footer');
+		}else{
+			$this->session->set_flashdata('warning', "Para ingresar al sistema debe estar logueado.");
+			redirect('panel/login');
+		}
 	}
 }
