@@ -9,3 +9,6 @@ body {
     display: inline-block;
     margin: 15px;
 }
+.form-actions .pagination{
+    margin-top: 0;
+}

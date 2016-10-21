@@ -1,5 +1,6 @@
-<h2>Página de inicio</h2>
-<p><a href="<?php echo base_url() . "panel/login";?>">Login</a></p>
+<div class="page-header">
+    <h1>Página de inicio</h1>
+</div>
 <?php
 /**
  * Created by PhpStorm.
