@@ -6,6 +6,7 @@
         <div class="panel panel-primary">
             <div class="panel-heading"><h2 class="panel-title">Base de datos de mujeres</h2></div>
             <div class="panel-body">
+
                 <?php if ($error): ?>
                     <div class="alert alert-danger" role="alert">
                         <?php echo $error; ?>
@@ -17,11 +18,15 @@
                 <?php endif; ?>
                 <div class="row form-actions">
                     <div class="col-xs-12 col-sm-6">
+                        <?php if ($search): ?>
+                            <h3>Resultados para: <em>"<?php echo $search; ?>"</em></h3>
+                        <?php endif; ?>
                         <?php echo $links; ?>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="pull-right">
-                            <form class="form-inline" action="<?php echo base_url() . 'panel/search';?>" method="post" enctype="multipart/form-data">
+                            <form class="form-inline" action="<?php echo base_url() . 'panel/search'; ?>" method="post"
+                                  enctype="multipart/form-data">
                                 <div class="input-group">
                                     <input name="search" type="text" class="form-control" placeholder="Buscar...">
                                 <span class="input-group-btn">
@@ -29,6 +34,10 @@
                                                                                   aria-hidden="true"></i> Buscar</button>
                                 </span>
                                 </div>
+                                <?php if ($search): ?>
+                                <a class="btn btn-default" href="<?php echo base_url() . "panel/system"; ?>"><i
+                                        class="fa fa-bath" aria-hidden="true"></i> Limpiar</a>
+                                <?php endif;?>
                                 <a class="btn btn-success" href="<?php echo base_url() . "panel/add"; ?>"><i
                                         class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
                             </form>
@@ -66,9 +75,11 @@
                                     <?php echo mdate("%d/%m/%Y", strtotime($p->fnac)); ?>
                                 </td>
                                 <td>
-                                    <a class="btn btn-warning" href="<?php echo base_url() . "panel/edit?id=" . $p->id; ?>"><i
+                                    <a class="btn btn-warning"
+                                       href="<?php echo base_url() . "panel/edit?id=" . $p->id; ?>"><i
                                             class="fa fa-pencil" aria-hidden="true"></i></a>
-                                    <a class="btn btn-danger" href="<?php echo base_url() . "panel/delete?id=" . $p->id; ?>"><i
+                                    <a class="btn btn-danger"
+                                       href="<?php echo base_url() . "panel/delete?id=" . $p->id; ?>"><i
                                             class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
                             </tr>

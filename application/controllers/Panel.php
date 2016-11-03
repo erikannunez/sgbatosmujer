@@ -167,7 +167,8 @@ class Panel extends CI_Controller
                 'user' => $this->session->userdata(),
                 'personas' => $this->panel_model->fetchPersonas($config["per_page"], $page),
                 'links' => $this->pagination->create_links(),
-                'totalCount' => $this->panel_model->recordCount()
+                'totalCount' => $this->panel_model->recordCount(),
+                'search' => NULL
             );
 
             $this->load->view('header', $data);
@@ -242,7 +243,8 @@ class Panel extends CI_Controller
                 'user' => $this->session->userdata(),
                 'links' => $this->pagination->create_links(),
                 'totalCount' => $this->panel_model->recordCount(),
-                'personas' => $this->panel_model->search($this->input->post('search'))
+                'personas' => $this->panel_model->search($this->input->post('search')),
+                'search' => $this->input->post('search')
             );
 
             $this->load->view('header', $data);
