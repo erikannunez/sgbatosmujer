@@ -6,8 +6,9 @@
         <div class="panel panel-primary">
             <div class="panel-heading"><h2 class="panel-title">Modificar datos</h2></div>
             <div class="panel-body">
-                <form class="form-horizontal" action="<?php echo base_url() . '/panel/addpersona'; ?>" method="post"
+                <form class="form-horizontal" action="<?php echo base_url() . 'panel/updatepersona'; ?>" method="post"
                       enctype="multipart/form-data">
+                    <input type="hidden" name="persona_id" value="<?php echo $persona->id;?>"/>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="legajo">Legajo:</label>
                         <div class="col-sm-10">
@@ -36,48 +37,74 @@
                         </div>
                     </div>
                     <div class="form-group" id="emailCombo">
+                        <?php
+                        $e_personal = array();
+                        $e_laboral = array();
+                        $e_otro = array();
+
+                        foreach($email as $e){
+                            if($e->tipoID == 1){
+                                $e_personal = $e;
+                            }else if($e->tipoID == 2){
+                                $e_laboral = $e;
+                            }else{
+                                $e_otro = $e;
+                            }
+                        }
+                        ?>
                         <label class="col-sm-2 control-label">E-mail:</label>
                         <div class="col-sm-10">
                             <ul class="list-group">
-                                <?php
-                                $countEmail = 1;
-                                foreach ($email as $e): ?>
-                                    <li class="list-group-item">
-                                        <div class="row">
-                                            <div class="col-sm-10">
-                                                <div class="input-group">
-                                                    <input type="email" class="form-control" name="mail<?php echo $countEmail;?>"
-                                                           value="<?php echo $e->direccion; ?>">
-                                                    <div class="input-group-btn">
-                                                        <button type="button" class="btn btn-default dropdown-toggle"
-                                                                data-toggle="dropdown" aria-haspopup="true"
-                                                                aria-expanded="false">
-                                                            <?php echo $e->tipo;?> <span class="caret"></span></button>
-                                                        <ul class="dropdown-menu dropdown-menu-right">
-                                                            <li><a href="#" data-tipoid="1">Laboral</a></li>
-                                                            <li><a href="#" data-tipoid="2">Personal</a></li>
-                                                            <li><a href="#" data-tipoid="3">Otro</a></li>
-                                                        </ul>
-                                                        <input value="<?php echo $e->tipoID;?>" type="hidden" class="form-control"
-                                                               name="tipoEmail<?php echo $countEmail;?>"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <div class="radio">
-                                                    <label>
-                                                        <input type="radio" name="optionsRadios" value="option1"
-                                                               <?php if($e->principal == 1) echo "checked";?>>Principal
-                                                    </label>
-                                                </div>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Laboral</span>
+                                                <input type="email" class="form-control" value="<?php if (isset($e_laboral->direccion)) echo $e_laboral->direccion;?>" name="mail_laboral">
                                             </div>
                                         </div>
-                                    </li>
-                                    <?php
-                                    $countEmail++;
-                                endforeach; ?>
-                                <li class="list-group-item list-group-item-info text-right">
-                                    <a class="btn btn-success" href="#">Añadir e-mail</a>
+                                        <div class="col-sm-2">
+                                            <div class="radio">
+                                                <label>
+                                                    <input required type="radio" name="optionsRadios" value="2" <?php if(isset($e_laboral->principal) && $e_laboral->principal == 1) echo "checked"; ?>>Principal
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Personal</span>
+                                                <input type="email" class="form-control" name="mail_personal" value="<?php if (isset($e_personal->direccion)) echo $e_personal->direccion;?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="radio">
+                                                <label>
+                                                    <input required type="radio" name="optionsRadios" value="1" <?php if(isset($e_personal->principal) && $e_personal->principal == 1) echo "checked"; ?>>Principal
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Otro</span>
+                                                <input type="email" class="form-control" value="<?php if (isset($e_otro->direccion)) echo $e_otro->direccion;?>" name="mail_otro">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="radio">
+                                                <label>
+                                                    <input required type="radio" name="optionsRadios" value="3" <?php if(isset($e_otro->principal) && $e_otro->principal == 1) echo "checked"; ?>>Principal
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </li>
                             </ul>
                         </div>

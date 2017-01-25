@@ -18,32 +18,37 @@
                 <?php endif; ?>
                 <div class="row form-actions">
                     <div class="col-xs-12 col-sm-6">
-                        <?php if ($search): ?>
-                            <h3>Resultados para: <em>"<?php echo $search; ?>"</em></h3>
-                        <?php endif; ?>
                         <?php echo $links; ?>
+                        <span class="label label-info">Total: <?php echo $totalCount; ?></span>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="pull-right">
-                            <form class="form-inline" action="<?php echo base_url() . 'panel/search'; ?>" method="post"
-                                  enctype="multipart/form-data">
+                            <form data-toggle="tooltip" title="Buscar por nombre, apellido o número de legajo..."  class="form-inline" action="<?php echo base_url() . 'panel/search'; ?>" method="get"
+                                  enctype="text/plain">
                                 <div class="input-group">
-                                    <input name="search" type="text" class="form-control" placeholder="Buscar...">
+                                    <input name="key" type="text" class="form-control" placeholder="Buscar...">
                                 <span class="input-group-btn">
                                     <button class="btn btn-info" type="submit"><i class="fa fa-search"
                                                                                   aria-hidden="true"></i> Buscar</button>
                                 </span>
                                 </div>
                                 <?php if ($search): ?>
-                                <a class="btn btn-default" href="<?php echo base_url() . "panel/system"; ?>"><i
-                                        class="fa fa-bath" aria-hidden="true"></i> Limpiar</a>
-                                <?php endif;?>
+                                    <a class="btn btn-default" href="<?php echo base_url() . "panel/system"; ?>"><i
+                                            class="fa fa-bath" aria-hidden="true"></i> Limpiar</a>
+                                <?php endif; ?>
                                 <a class="btn btn-success" href="<?php echo base_url() . "panel/add"; ?>"><i
                                         class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
                             </form>
                         </div>
                     </div>
                 </div>
+                <?php if ($search): ?>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h3>Resultados para: <em>"<?php echo $search; ?>"</em></h3>
+                        </div>
+                    </div>
+                <?php endif; ?>
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -79,7 +84,7 @@
                                        href="<?php echo base_url() . "panel/edit?id=" . $p->id; ?>"><i
                                             class="fa fa-pencil" aria-hidden="true"></i></a>
                                     <a class="btn btn-danger"
-                                       href="<?php echo base_url() . "panel/delete?id=" . $p->id; ?>"><i
+                                       href="<?php echo base_url() . "panel/delete?id=" . $p->id; ?>" data-toggle="modal" data-target="#confirm_modal"><i
                                             class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
                             </tr>

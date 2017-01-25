@@ -185,6 +185,7 @@ class Panel extends CI_Controller
         if ($this->session->userdata('username')) {
             $data = array(
                 'error' => $this->session->flashdata('error'),
+                'warning' => $this->session->flashdata('warning'),
                 'success' => $this->session->flashdata('success'),
                 'user' => $this->session->userdata()
             );
@@ -196,8 +197,7 @@ class Panel extends CI_Controller
         }
     }
 
-    public function edit()
-    {
+    public function edit(){
 
         if ($this->session->userdata('username')) {
             $data = array(
@@ -227,7 +227,7 @@ class Panel extends CI_Controller
 
     public function delete()
     {
-        $id = $this->input->get(id);
+        $id = $this->input->get('id');
     }
 
     public function search()
@@ -236,15 +236,48 @@ class Panel extends CI_Controller
 
             $this->load->model('panel_model');
 
+            $key = $this->input->get('key');
+
+            $config = array(
+                'base_url' => site_url('panel/search'),
+                'per_page' => 20,
+                'uri_segment' => 3,
+                'total_rows' => count($this->panel_model->search($key, NULL, NULL)),
+                'num_links' => 5,
+                'full_tag_open' => '<ul class="pagination pagination-sm">',
+                'full_tag_close' => '</ul>',
+                'first_link' => false,
+                'last_link' => false,
+                'first_tag_open' => '<li>',
+                'first_tag_close' => '</li>',
+                'prev_link' => '&laquo',
+                'prev_tag_open' => '<li class="prev">',
+                'prev_tag_close' => '</li>',
+                'next_link' => '&raquo',
+                'next_tag_open' => '<li>',
+                'next_tag_close' => '</li>',
+                'last_tag_open' => '<li>',
+                'last_tag_close' => '</li>',
+                'cur_tag_open' => '<li class="active"><a href="#">',
+                'cur_tag_close' => '</a></li>',
+                'num_tag_open' => '<li>',
+                'num_tag_close' => '</li>',
+                'reuse_query_string' => TRUE
+            );
+
+            $this->pagination->initialize($config);
+
+            $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
             $data = array(
                 'error' => $this->session->flashdata('error'),
                 'warning' => $this->session->flashdata('warning'),
                 'success' => $this->session->flashdata('success'),
                 'user' => $this->session->userdata(),
+                'search' => $key,
+                'personas' => $this->panel_model->search($key, $config['per_page'], $page),
+                'totalCount' => $config['total_rows'],
                 'links' => $this->pagination->create_links(),
-                'totalCount' => $this->panel_model->recordCount(),
-                'personas' => $this->panel_model->search($this->input->post('search')),
-                'search' => $this->input->post('search')
             );
 
             $this->load->view('header', $data);
@@ -254,5 +287,89 @@ class Panel extends CI_Controller
         } else {
             redirect('panel/login');
         }
+    }
+
+    public function updatepersona(){
+
+        if ($this->session->userdata('username')) {
+            $persona = new Persona();
+            $persona->setId($this->input->post('persona_id'));
+            $persona->setLegajo($this->input->post('legajo'));
+            $persona->setApellido($this->input->post('apellido'));
+            $persona->setNombre($this->input->post('nombre'));
+            $persona->setFechaNac($this->input->post('fnac'));
+
+            $m_ppal = $this->input->post('optionsRadios');
+
+            $emails = array(
+                1 => array(
+                    //Personal
+                    "direccion" => $this->input->post('mail_personal'),
+                    "principal" => ($m_ppal == 1) ? 1 : 0
+                ),
+                2 => array(
+                    //Laboral
+                    "direccion" => $this->input->post('mail_laboral'),
+                    "principal" => ($m_ppal == 2) ? 1 : 0
+                ),
+                3 => array(
+                    //Otro
+                    "direccion" => $this->input->post('mail_otro'),
+                    "principal" => ($m_ppal == 3) ? 1 : 0
+                )
+            );
+
+            $persona->setEmails($emails);
+
+        }else{
+            redirect('panel/login');
+        }
+        
+    }
+    
+    public function addpersona(){
+
+        $persona = new Persona();
+
+        $persona->setId(NULL);
+        $persona->setLegajo($this->input->post('legajo'));
+        $persona->setApellido($this->input->post('apellido'));
+        $persona->setNombre($this->input->post('nombre'));
+        $persona->setFechaNac($this->input->post('fnac'));
+
+        $m_ppal = $this->input->post('optionsRadios');
+
+        $emails = array(
+            1 => array(
+                //Personal
+                "direccion" => $this->input->post('mail_personal'),
+                "principal" => ($m_ppal == 1) ? 1 : 0
+            ),
+            2 => array(
+                //Laboral
+                "direccion" => $this->input->post('mail_laboral'),
+                "principal" => ($m_ppal == 2) ? 1 : 0
+            ),
+            3 => array(
+                //Otro
+                "direccion" => $this->input->post('mail_otro'),
+                "principal" => ($m_ppal == 3) ? 1 : 0
+            )
+        );
+
+        $persona->setEmails($emails);
+
+        $this->load->model('panel_model');
+
+        $this->panel_model->addPersona($persona);
+
+        $this->session->set_flashdata('success', "¡Se han guardado los datos correctamente!");
+        redirect('panel/add');
+    }
+
+    public function searchLegajo($legajo){
+
+
+
     }
 }
