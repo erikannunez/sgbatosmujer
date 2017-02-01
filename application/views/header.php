@@ -13,6 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link href="<?php echo base_url() . "assets/css/bootstrap-theme.min.css"; ?>" rel="stylesheet">
     <link href="<?php echo base_url() . "assets/css/font-awesome.min.css"; ?>" rel="stylesheet">
     <link href="<?php echo base_url() . "assets/css/styles.css"; ?>" rel="stylesheet">
+	<script src="<?php echo base_url() . "assets/js/jquery.min.js"; ?>"></script>
     <!--[if lt IE 9]>
     <script src="<?php echo base_url() . " assets/js/html5shiv.min.js"; ?>"></script>
     <script src = "<?php echo base_url() . "assets / js / respond.min.js"; ?>" ></script>

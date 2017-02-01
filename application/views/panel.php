@@ -3,6 +3,11 @@
         <div class="page-header">
             <h1>Panel de Control</h1>
         </div>
+		<?php if ($success){?>
+        <div class="alert alert-success" role="alert">
+        <?php echo $success;?>
+        </div>
+		<?php } ?>;
         <div class="panel panel-primary">
             <div class="panel-heading"><h2 class="panel-title">Base de datos de mujeres</h2></div>
             <div class="panel-body">
@@ -42,6 +47,7 @@
                         </div>
                     </div>
                 </div>
+				<?php if($personas){?>
                 <?php if ($search): ?>
                     <div class="row">
                         <div class="col-xs-12">
@@ -81,14 +87,16 @@
                                 </td>
                                 <td>
                                     <a class="btn btn-warning"
-                                       href="<?php echo base_url() . "panel/edit?id=" . $p->id; ?>"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></a>
+                                       href="<?php echo base_url() . "panel/edit?id=" . $p->id; ?>">
+									   <i class="fa fa-pencil" aria-hidden="true"></i></a>
                                     <a class="btn btn-danger"
-                                       href="<?php echo base_url() . "panel/delete?id=" . $p->id; ?>" data-toggle="modal" data-target="#confirm_modal"><i
-                                            class="fa fa-trash" aria-hidden="true"></i></a>
+                                       href="javascript:;" onclick="confirmar('delete?id=<? echo $p->id?>'); return false;">
+									   <i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
+						<?php }else{?>
+						<?php echo '<div class="alert alert-warning" role="alert">No se ha encontrado a la persona</div>';}?>
                         </tbody>
                         <tfoot>
                         <tr>
@@ -101,3 +109,13 @@
         </div>
     </div>
 </div>
+<script>
+function confirmar(url){
+	if (!confirm("¿Está seguro de que desea eliminar el la persona?")) {
+		return false;
+		} else {
+		document.location= url;
+		return true;
+	}
+}
+</script>
